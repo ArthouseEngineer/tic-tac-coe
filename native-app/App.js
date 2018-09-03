@@ -17,15 +17,14 @@ export default class App extends React.Component {
         }
     }
 
-    componentDidUpdate(prev,next) {
-
-    }
 
     handleClick(index) {
         if (this.state.board[index] === "" && !this.state.winner) {
-            this.state.board[index] = this.state.currentTurn
+
+            const board = this.state.board.slice()
+            board[index] = this.state.currentTurn
             this.setState({
-                board: this.state.board,
+                board,
                 currentTurn: this.state.currentTurn === this.state.PLAYER_ONE_SYMBOL ? this.state.PLAYER_TWO_SYMBOL
                     : this.state.PLAYER_ONE_SYMBOL,
                 winner: this.checkForWinner(),
@@ -64,8 +63,10 @@ export default class App extends React.Component {
                 <Text style={styles.h1}>Tic Tac Coe</Text>
                 <View style={styles.container}>
                     {this.state.board.map((cell, index) => {
-                        return <TouchableOpacity style={styles.square}  key={index} onPress={this.handleClick(index)}>
-                            {cell};
+                        return <TouchableOpacity key={index} onPress={() => this.handleClick(index)}>
+                            <View style={styles.square}>
+                                <Text>{cell}</Text>
+                            </View>;
                         </TouchableOpacity>
                     })}
                 </View>
@@ -104,6 +105,7 @@ const styles = StyleSheet.create({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
+
         },
     winner:
         {
