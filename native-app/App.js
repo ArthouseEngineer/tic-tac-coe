@@ -70,6 +70,7 @@ export default class App extends React.Component {
                         </TouchableOpacity>
                     })}
                 </View>
+                {this.state.winner ? <Text style={styles.winner}> {`The final winner is : ${this.state.winner}`}</Text> : null}
             </View>
         )
     }
